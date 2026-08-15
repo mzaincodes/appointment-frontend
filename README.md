@@ -156,6 +156,23 @@ error the patient has to recover from.
 
 ---
 
+## Fonts
+
+**Fonts are committed to `app/fonts/` and loaded with `next/font/local`.**
+
+`next/font/google` downloads the files from Google's CDN *during the build*,
+which makes every build depend on a third-party network call. When that call
+fails the build fails outright, and the error is opaque — the loader reports
+`TypeError: Cannot read properties of null (reading '1')` because it tries to
+parse a stylesheet it never received. It is also environment-dependent: the same
+commit builds locally and fails in a hosted build container.
+
+Self-hosting removes the dependency. Builds are deterministic, work offline, and
+cannot be broken by someone else's CDN. Both faces are variable fonts, so one
+file per family (48 KB + 28 KB) covers every weight, and `next/font/local` still
+preloads them and generates the size-adjusted fallback that prevents layout
+shift.
+
 ## Theming
 
 Three states — `light`, `dark`, and `system` (the default) — persisted to

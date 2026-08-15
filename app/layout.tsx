@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import { ThemeProvider, themeInitScript } from '@/hooks/useTheme';
 import { AuthProvider } from '@/hooks/useAuth';
@@ -10,24 +10,40 @@ import { ChatWidget } from '@/components/chatbot/ChatWidget';
 /**
  * Root layout.
  *
- * Fonts are loaded through `next/font`, which self-hosts them and emits CSS
- * variables — no render-blocking request to Google and no layout shift when the
- * face swaps in.
+ * ## Why the fonts are committed to the repo
+ *
+ * `next/font/google` downloads the font files from Google's CDN **during the
+ * build**. That makes every build depend on a third-party network call, and
+ * when it fails the build fails outright — on Vercel it surfaces as an opaque
+ * `TypeError: Cannot read properties of null (reading '1')` from inside the
+ * font loader, because it tries to parse a stylesheet it never received.
+ *
+ * Serving the files from `app/fonts/` removes that dependency entirely: builds
+ * are deterministic, work offline, and cannot be broken by someone else's CDN.
+ * Both are variable fonts, so one file per family covers every weight.
+ *
+ * `next/font/local` still does the useful part — self-hosting, preloading, CSS
+ * variables, and a size-adjusted fallback that prevents layout shift.
  */
 
-const inter = Inter({
-  subsets: ['latin'],
+const inter = localFont({
+  src: './fonts/Inter-Variable.woff2',
   variable: '--font-sans',
   display: 'swap',
+  weight: '100 900',
+  // Metrics of the fallback face, so text does not reflow when the real font
+  // arrives. These match Inter against the system sans stack.
+  adjustFontFallback: 'Arial',
 });
 
 // A slightly warmer geometric face for headings, so display type reads as
 // designed rather than as "the body font, but bigger".
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+const jakarta = localFont({
+  src: './fonts/PlusJakartaSans-Variable.woff2',
   variable: '--font-display',
   display: 'swap',
-  weight: ['600', '700', '800'],
+  weight: '200 800',
+  adjustFontFallback: 'Arial',
 });
 
 export const metadata: Metadata = {

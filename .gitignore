@@ -1,0 +1,57 @@
+# =============================================================================
+#  Bright Smile Dental — Web client
+# =============================================================================
+
+# ---- Dependencies -----------------------------------------------------------
+node_modules/
+.pnp/
+.pnp.js
+.yarn/install-state.gz
+
+# ---- Environment ------------------------------------------------------------
+#  `.env.example` IS committed. Note that NEXT_PUBLIC_* values are inlined into
+#  the browser bundle, so nothing secret belongs in any of these files.
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+!.env.example
+
+# ---- Next.js ----------------------------------------------------------------
+.next/
+out/
+build/
+next-env.d.ts
+*.tsbuildinfo
+
+# ---- Logs -------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---- Testing ----------------------------------------------------------------
+coverage/
+test-results/
+playwright-report/
+
+# ---- Editors & OS -----------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---- Misc -------------------------------------------------------------------
+.vercel
+.cache/
+.turbo/
+tmp/
+temp/

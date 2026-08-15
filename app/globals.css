@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Theme tokens.
+ *
+ * `:root` holds the light theme; `.dark` overrides only the values that change.
+ * Because every component references a semantic token (surface, content-muted,
+ * line) rather than a literal colour, switching themes is this file alone.
+ *
+ * The dark palette is designed rather than inverted: surfaces are warm slate
+ * blues that sit slightly *above* pure black so cards can still be separated by
+ * elevation, and the brand hue is lifted a step because a mid-teal that reads
+ * confidently on white goes muddy on a dark ground.
+ */
+@layer base {
+  :root {
+    color-scheme: light;
+
+    /* Brand — teal */
+    --brand-50: 240 253 250;
+    --brand-100: 204 251 241;
+    --brand-200: 153 246 228;
+    --brand-300: 94 234 212;
+    --brand-400: 45 212 191;
+    --brand-500: 20 184 166;
+    --brand-600: 13 148 136;
+    --brand-700: 15 118 110;
+    --brand-800: 17 94 89;
+    --brand-900: 19 78 74;
+    --brand-950: 4 47 46;
+
+    /*
+     * Brand roles.
+     *
+     * The numbered scale above is a palette; these three are the *contracts*
+     * components actually use, and they exist because picking a shade by eye
+     * is how you end up with white text on a mid-teal at 3.7:1.
+     *
+     *   --brand-solid     a filled brand surface that carries --brand-on-solid
+     *   --brand-on-solid  the only text colour allowed on --brand-solid
+     *   --brand-text      brand-coloured text sitting on canvas/surface
+     *
+     * Every pairing below is measured against WCAG AA (4.5:1 body, 3:1 large):
+     *   light  white on brand-700 .............. 5.47:1
+     *          brand-700 on canvas ............. 5.27:1
+     *   dark   deep teal ink on mint ........... 5.81:1
+     *          mint on dark canvas ............. 7.72:1
+     */
+    --brand-solid: 15 118 110; /* teal-700 */
+    --brand-solid-hover: 17 94 89; /* teal-800  — 7.58:1 with white */
+    --brand-on-solid: 255 255 255;
+    --brand-text: 15 118 110;
+
+    /* Accent — warm amber, used sparingly for highlights */
+    --accent-400: 251 191 36;
+    --accent-500: 245 158 11;
+    --accent-600: 217 119 6;
+
+    /* Surfaces */
+    --canvas: 249 250 251;
+    --surface: 255 255 255;
+    --surface-raised: 255 255 255;
+    --surface-sunken: 243 244 246;
+
+    --line: 229 231 235;
+    --line-strong: 209 213 219;
+
+    /* Text — 4.5:1 or better against its intended surface */
+    --content: 17 24 39;
+    --content-muted: 75 85 99;
+    --content-subtle: 100 107 121; /* 4.83:1 on surface-sunken (was 4.39:1) */
+    --content-inverse: 255 255 255;
+
+    --success-bg: 240 253 244;
+    --success-fg: 21 128 61;
+    --success-border: 187 247 208;
+
+    --warning-bg: 255 251 235;
+    --warning-fg: 180 83 9;
+    --warning-border: 253 230 138;
+
+    --danger-bg: 254 242 242;
+    --danger-fg: 185 28 28;
+    --danger-border: 254 202 202;
+
+    --info-bg: 239 246 255;
+    --info-fg: 29 78 216;
+    --info-border: 191 219 254;
+
+    --shadow: 15 23 42;
+  }
+
+  .dark {
+    color-scheme: dark;
+
+    /* Lifted a step: mid-teal loses definition against a dark ground. */
+    --brand-50: 4 47 46;
+    --brand-100: 19 78 74;
+    --brand-200: 17 94 89;
+    --brand-300: 15 118 110;
+    --brand-400: 20 184 166;
+    --brand-500: 45 212 191;
+    --brand-600: 94 234 212;
+    --brand-700: 153 246 228;
+    --brand-800: 204 251 241;
+    --brand-900: 240 253 250;
+    --brand-950: 240 253 250;
+
+    /*
+     * Dark inverts the palette, so a filled brand surface becomes LIGHT mint —
+     * and therefore needs DARK text on it. Reusing the light theme's white
+     * would give 1.4:1, which is effectively invisible; that is the bug these
+     * roles exist to prevent.
+     */
+    --brand-solid: 45 212 191; /* mint */
+    --brand-solid-hover: 94 234 212; /* lighter mint — 9.78:1 with the ink */
+    --brand-on-solid: 4 47 46; /* deep teal ink — 5.81:1 on mint */
+    --brand-text: 45 212 191; /* 7.72:1 on the dark canvas */
+
+    --accent-400: 252 211 77;
+    --accent-500: 251 191 36;
+    --accent-600: 245 158 11;
+
+    /* Not pure black — cards need somewhere to sit above the canvas. */
+    --canvas: 9 12 20;
+    --surface: 17 22 33;
+    --surface-raised: 24 31 45;
+    --surface-sunken: 13 17 26;
+
+    --line: 38 47 64;
+    --line-strong: 55 65 85;
+
+    --content: 241 245 249;
+    --content-muted: 163 176 195;
+    --content-subtle: 127 141 163;
+    --content-inverse: 9 12 20;
+
+    --success-bg: 5 46 22;
+    --success-fg: 134 239 172;
+    --success-border: 22 101 52;
+
+    --warning-bg: 60 32 4;
+    --warning-fg: 253 224 71;
+    --warning-border: 133 77 14;
+
+    --danger-bg: 60 15 15;
+    --danger-fg: 252 165 165;
+    --danger-border: 127 29 29;
+
+    --info-bg: 14 30 62;
+    --info-fg: 147 197 253;
+    --info-border: 30 64 175;
+
+    --shadow: 0 0 0;
+  }
+
+  * {
+    @apply border-line;
+  }
+
+  body {
+    @apply bg-canvas text-content antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Prevents the layout shifting horizontally when a modal locks scrolling. */
+    scrollbar-gutter: stable;
+  }
+
+  /* A single visible focus treatment everywhere, rather than per-component. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-canvas;
+  }
+
+  ::selection {
+    @apply bg-brand-500/25;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Numbers in tables and slot grids should align in columns. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /**
+   * Skeletons.
+   *
+   * A sweeping highlight rather than a pulsing block — it reads as "loading"
+   * instead of "broken", and the direction implies progress.
+   */
+  .skeleton {
+    @apply relative overflow-hidden rounded-lg bg-surface-sunken;
+  }
+  .skeleton::after {
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    content: '';
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(var(--content) / 0.055) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Hairline that fades at both ends — softer than a full-width rule. */
+  .rule-fade {
+    @apply h-px w-full;
+    background: linear-gradient(90deg, transparent, rgb(var(--line-strong)), transparent);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Hides the scrollbar on horizontal strips (date picker, filter pills). */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Respect a reduced-motion preference — every animation here is decorative. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

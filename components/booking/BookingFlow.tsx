@@ -507,15 +507,18 @@ export function BookingFlow({ services }: { services: Service[] }) {
 
 function StepIndicator({ currentIndex }: { currentIndex: number }) {
   return (
-    <ol className="flex items-center justify-between gap-1" aria-label="Booking progress">
+    <ol className="flex w-full items-center gap-1" aria-label="Booking progress">
       {STEPS.map((entry, index) => {
         const Icon = entry.icon;
         const isDone = index < currentIndex;
         const isCurrent = index === currentIndex;
+        const isLast = index === STEPS.length - 1;
 
         return (
-          <li key={entry.id} className="flex flex-1 items-center gap-1">
-            <div className="flex flex-col items-center gap-1.5">
+          // Only the steps that carry a connector grow; the final marker stays
+          // its own width so the row ends flush with the card below it.
+          <li key={entry.id} className={cn('flex items-center gap-1', !isLast && 'flex-1')}>
+            <div className="flex shrink-0 flex-col items-center gap-1.5">
               <span
                 aria-current={isCurrent ? 'step' : undefined}
                 className={cn(
@@ -531,7 +534,7 @@ function StepIndicator({ currentIndex }: { currentIndex: number }) {
               </span>
               <span
                 className={cn(
-                  'text-[11px] font-medium',
+                  'whitespace-nowrap text-[11px] font-medium',
                   isCurrent ? 'text-content' : 'text-content-subtle',
                 )}
               >
@@ -539,7 +542,7 @@ function StepIndicator({ currentIndex }: { currentIndex: number }) {
               </span>
             </div>
 
-            {index < STEPS.length - 1 && (
+            {!isLast && (
               <span
                 className={cn(
                   'mb-5 h-0.5 flex-1 rounded-full transition-colors duration-300',

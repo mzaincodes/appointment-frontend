@@ -11,12 +11,7 @@ node_modules/
 # ---- Environment ------------------------------------------------------------
 #  `.env.example` IS committed. Note that NEXT_PUBLIC_* values are inlined into
 #  the browser bundle, so nothing secret belongs in any of these files.
-.env
-.env.local
 .env.*.local
-.env.development
-.env.production
-.env.test
 !.env.example
 
 # ---- Next.js ----------------------------------------------------------------
@@ -40,7 +35,6 @@ test-results/
 playwright-report/
 
 # ---- Editors & OS -----------------------------------------------------------
-.vscode/*
 !.vscode/extensions.json
 .idea/
 *.swp
@@ -55,3 +49,7 @@ Thumbs.db
 .turbo/
 tmp/
 temp/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+config.bat

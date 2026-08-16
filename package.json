@@ -4,9 +4,9 @@
   "private": true,
   "description": "Next.js client for the Bright Smile Dental appointment booking platform",
   "scripts": {
-    "dev": "next dev -p 3000",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node api.js && next dev -p 3000",
+    "build": "node api.js && next build",
+    "start": "node api.js && next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"app/**/*.{ts,tsx,css}\" \"components/**/*.tsx\" \"hooks/**/*.{ts,tsx}\" \"lib/*.ts\" \"services/*.ts\" \"types/*.ts\" \"*.ts\"",
